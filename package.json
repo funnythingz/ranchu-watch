@@ -14,10 +14,17 @@
     "test:e2e": "cross-env TEST=e2e ava --config e2e.config.js"
   },
   "dependencies": {
-    "nuxt": "^2.0.0",
-    "@nuxtjs/bulma": "^1.2.1",
     "@nuxtjs/axios": "^5.3.6",
-    "@nuxtjs/pwa": "^3.0.0-0"
+    "@nuxtjs/bulma": "^1.2.1",
+    "@nuxtjs/pwa": "^3.0.0-0",
+    "dotenv": "^8.2.0",
+    "node-sass": "^4.13.0",
+    "nuxt": "^2.0.0",
+    "pug": "^2.0.4",
+    "pug-loader": "^2.4.0",
+    "pug-plain-loader": "^1.0.0",
+    "sass": "^1.23.1",
+    "sass-loader": "^8.0.0"
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.27",
