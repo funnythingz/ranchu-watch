@@ -10,7 +10,7 @@ section.section
     .columns
       .column
         figure.image
-          img(:src="ranchuNow")
+          img(:src="ranchuNow" v-if="isOnTime()")
         p.is-size-7.has-text-centered
           time
             | {{date}}
@@ -21,9 +21,9 @@ section.section
     .columns
       .column
         p.has-text-centered
-            | &copy;
-            a.link(href="https://github.com/funnythingz" target="_blank")
-              | funnythingz
+          | &copy;
+          a.link(href="https://github.com/funnythingz" target="_blank")
+            | funnythingz
 </template>
 
 <script>
@@ -82,6 +82,10 @@ export default {
 
     reload() {
       location.reload()
+    },
+
+    isOnTime() {
+      return (new Date().getHours() >= 8 && new Date().getHours() < 16)
     }
 
   }
@@ -101,7 +105,7 @@ export default {
     color: #fff
     position: absolute;
     text-align: center;
-    top: 40%;
+    top: 45%;
     left: 20%;
     right: 20%;
 
