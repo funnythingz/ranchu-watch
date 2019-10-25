@@ -3,43 +3,78 @@ section.section
   .container
     .columns
       .column
-        h1.title.is-4
-          | らんちゅうウォッチ
+        .columns.is-mobile
+          .column
+            h1.title.is-4
+              | らんちゅうウォッチ
+          .column.has-text-right.is-3
+            button.button.is-small(@click="reload()")
+              | 更新
+    .columns.is-vcentered
+      .column
         p
           | ライブ時間: 8:00 ~ 16:00
+      .column.has-text-right
+        p.is-size-7
+          time
+            | {{date}}
     .columns
       .column
         figure.image
           img(:src="ranchuNow" v-if="isOnTime()")
-        p.is-size-7.has-text-centered
-          time
-            | {{date}}
     .columns
       .column.has-text-centered
-        button.button(@click="reload()")
-          | 更新する
-    .columns
-      .column
-        p.has-text-centered
-          | &copy;
-          a.link(href="https://github.com/funnythingz" target="_blank")
-            | funnythingz
+  .container
+    h1.title.is-6
+      | きのうのらんちゅう
+    .columns.is-variable.is-1.is-mobile.is-multiline
+      .column.is-3.has-text-centerd(v-for="archive in archives")
+        figure.thum
+          img(:src="fileName(archive.h, archive.m)")
+        p.is-size-7.has-text-centered
+          | {{archive.h}}:{{archive.m}}
 </template>
 
 <script>
 export default {
 
+  data() {
+    return {
+      archives: [
+        {h: '08', m: '00'},
+        {h: '08', m: '30'},
+        {h: '09', m: '00'},
+        {h: '09', m: '30'},
+        {h: '10', m: '00'},
+        {h: '10', m: '30'},
+        {h: '11', m: '00'},
+        {h: '11', m: '30'},
+        {h: '12', m: '00'},
+        {h: '12', m: '30'},
+        {h: '13', m: '00'},
+        {h: '13', m: '30'},
+        {h: '14', m: '00'},
+        {h: '14', m: '30'},
+        {h: '15', m: '00'},
+        {h: '15', m: '30'}
+      ]
+    }
+  },
+
   computed: {
+
     date() {
       return `${this.year()}/${this.month()}/${this.day()} ${this.hour()}:${this.minutes()}`
     },
+
     ranchuNow() {
       const domain = 'https://ranchu-watch.s3-ap-northeast-1.amazonaws.com/capture'
       const dateDir = `${this.year()}${this.month()}${this.day()}`
       const hourDir = `${this.hour()}`
-      const filename = `${this.year()}${this.month()}${this.day()}-${this.hour()}${this.minutes()}.jpg`
+      const filename = `${dateDir}-${hourDir}${this.minutes()}.jpg`
       return `${domain}/${dateDir}/${hourDir}/${filename}` 
     }
+
   },
 
   methods: {
@@ -86,6 +121,14 @@ export default {
 
     isOnTime() {
       return (new Date().getHours() >= 8 && new Date().getHours() < 16)
+    },
+
+    fileName(h, m) {
+      const domain = 'https://ranchu-watch.s3-ap-northeast-1.amazonaws.com/capture'
+      const dateDir = `${this.year()}${this.month()}${this.day() - 1}`
+      const filename = `${dateDir}-${h}${m}.jpg`
+
+      return `${domain}/${dateDir}/${h}/${filename}`
     }
 
   }
@@ -113,6 +156,8 @@ export default {
     position: relative
     z-index: 1
 
-.link
-  margin-left: 5px
+.thum
+  width: 100%
+  > img
+    vertical-align: middle
 </style>
