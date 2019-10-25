@@ -12,7 +12,6 @@ section.section
         figure.image
           img(:src="ranchuNow")
         p.is-size-7.has-text-centered
-          | 更新時間:
           time
             | {{date}}
     .columns
@@ -93,6 +92,17 @@ export default {
 .container
   margin-top: 1rem
 .image > img
+  min-height: 240px
+  background-color: #333
+  position: relative
+  &::before
+    content: 'ライブ時間にまた来てね'
+    color: #fff
+    position: absolute;
+    text-align: center;
+    top: 45%;
+    left: 20%;
+    right: 20%;
 
 .link
   margin-left: 5px
