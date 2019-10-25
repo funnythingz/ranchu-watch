@@ -104,6 +104,10 @@ export default {
     left: 20%;
     right: 20%;
 
+  > img
+    position: relative
+    z-index: 1
+
 .link
   margin-left: 5px
 </style>
