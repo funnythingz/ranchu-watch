@@ -21,7 +21,7 @@ section.section
     .columns
       .column
         p.has-text-centered
-            | &copy
+            | &copy;
             a.link(href="https://github.com/funnythingz" target="_blank")
               | funnythingz
 </template>
@@ -91,7 +91,7 @@ export default {
 <style lang="sass" scoped>
 .container
   margin-top: 1rem
-.image > img
+.image
   min-height: 240px
   background-color: #333
   position: relative
@@ -100,7 +100,7 @@ export default {
     color: #fff
     position: absolute;
     text-align: center;
-    top: 45%;
+    top: 40%;
     left: 20%;
     right: 20%;
 
