@@ -5,21 +5,26 @@ section.section
       .column
         h1.title.is-4
           | らんちゅうウォッチ
-    .columns.is-mobile
-      .column
-        time
-          | {{date}}
-      .column.has-text-right
-        button.button(@click="reload()")
-          | 更新する
+        p
+          | ライブ時間: 7:00 ~ 18:00
     .columns
       .column
         figure.image
           img(:src="ranchuNow")
+        p.is-size-7.has-text-centered
+          | 更新時間:
+          time
+            | {{date}}
+    .columns
+      .column.has-text-centered
+        button.button(@click="reload()")
+          | 更新する
     .columns
       .column
         p.has-text-centered
-          | &copy; funnythingz
+            | &copy
+            a.link(href="https://github.com/funnythingz" target="_blank")
+              | funnythingz
 </template>
 
 <script>
@@ -88,4 +93,7 @@ export default {
 .container
   margin-top: 1rem
 .image > img
+
+.link
+  margin-left: 5px
 </style>
