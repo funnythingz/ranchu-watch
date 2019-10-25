@@ -1,17 +1,21 @@
 <template lang="pug">
-section
+section.section
   .container
     .columns
       .column
-        h1.title
-          | らんちゅうをウォッチしている
+        h1.title.is-4
+          | らんちゅうウォッチ
+    .columns.is-mobile
+      .column
         time
           | {{date}}
       .column.has-text-right
         button.button(@click="reload()")
           | 更新する
-    figure.image
-      img(:src="ranchuNow")
+    .columns
+      .column
+        figure.image
+          img(:src="ranchuNow")
     .columns
       .column
         p.has-text-centered
@@ -20,20 +24,6 @@ section
 
 <script>
 export default {
-
-  data() {
-    return {
-      timer: ''
-    }
-  },
-
-  mounted() {
-    this.timer = setInterval(this.ranchuNow, 60000)
-  },
-
-  destroyed() {
-    clearInterval(this.timer)
-  },
 
   computed: {
     date() {
