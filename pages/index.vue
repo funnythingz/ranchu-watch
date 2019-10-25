@@ -3,34 +3,44 @@ section.section
   .container
     .columns
       .column
-        .columns.is-mobile
+        .columns.is-mobile.is-vcentered
           .column
             h1.title.is-4
               | らんちゅうウォッチ
           .column.has-text-right.is-3
             button.button.is-small(@click="reload()")
               | 更新
-    .columns.is-vcentered
+    .columns.is-mobile.is-vcentered
       .column
         p
           | ライブ時間: 8:00 ~ 16:00
-      .column.has-text-right
+      .column.is-4.has-text-right
         p.is-size-7
           time
             | {{date}}
+  .container
+    h1.title.is-6
+      | いまのらんちゅう
     .columns
       .column
         figure.image
           img(:src="ranchuNow" v-if="isOnTime()")
-    .columns
-      .column.has-text-centered
+  .container(v-if="isOnTime()")
+    h1.title.is-6
+      | きょうのらんちゅう
+    .columns.is-variable.is-1.is-mobile.is-multiline
+      .column.is-3.has-text-centerd(v-for="archive in archives" v-if="parseInt(archive.h) <= parseInt(hour())")
+        figure.thum
+          img(:src="fileName(archive.h, archive.m, 0)")
+        p.is-size-7.has-text-centered
+          | {{archive.h}}:{{archive.m}}
   .container
     h1.title.is-6
       | きのうのらんちゅう
     .columns.is-variable.is-1.is-mobile.is-multiline
       .column.is-3.has-text-centerd(v-for="archive in archives")
         figure.thum
-          img(:src="fileName(archive.h, archive.m)")
+          img(:src="fileName(archive.h, archive.m, -1)")
         p.is-size-7.has-text-centered
           | {{archive.h}}:{{archive.m}}
 </template>
@@ -123,9 +133,9 @@ export default {
       return (new Date().getHours() >= 8 && new Date().getHours() < 16)
     },
 
-    fileName(h, m) {
+    fileName(h, m, diffDay) {
       const domain = 'https://ranchu-watch.s3-ap-northeast-1.amazonaws.com/capture'
-      const dateDir = `${this.year()}${this.month()}${this.day() - 1}`
+      const dateDir = `${this.year()}${this.month()}${this.day() + diffDay}`
       const filename = `${dateDir}-${h}${m}.jpg`
 
       return `${domain}/${dateDir}/${h}/${filename}`
@@ -160,4 +170,7 @@ export default {
   width: 100%
   > img
     vertical-align: middle
+
+.title
+  margin-bottom: 10px
 </style>
