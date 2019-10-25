@@ -6,7 +6,7 @@ section.section
         h1.title.is-4
           | らんちゅうウォッチ
         p
-          | ライブ時間: 7:00 ~ 18:00
+          | ライブ時間: 8:00 ~ 16:00
     .columns
       .column
         figure.image
@@ -91,6 +91,7 @@ export default {
 <style lang="sass" scoped>
 .container
   margin-top: 1rem
+  max-width: 700px
 .image
   min-height: 240px
   background-color: #333
