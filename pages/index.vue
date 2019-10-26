@@ -29,7 +29,7 @@ section.section
     h1.title.is-6
       | きょうのらんちゅう
     .columns.is-variable.is-1.is-mobile.is-multiline
-      .column.is-3.has-text-centerd(v-for="archive in archives" v-if="parseInt(archive.h) <= parseInt(hour())")
+      .column.is-3.has-text-centerd(v-for="archive in archives" v-if="parseInt(archive.h + archive.m) <= parseInt(hour() + minutes())")
         figure.thum
           img(:src="fileName(archive.h, archive.m, 0)")
         p.is-size-7.has-text-centered
@@ -102,11 +102,15 @@ export default {
       if (month < 10) {
         return `0${month}`
       }
-      return month
+      return month.toString()
     },
 
     day() {
-      return this.now().getDate()
+      const day = this.now().getDate()
+      if (day < 10) {
+        return `0${day}`
+      }
+      return day.toString()
     },
 
     hour() {
@@ -114,7 +118,7 @@ export default {
       if (hour < 10) {
         return `0${hour}`
       }
-      return hour
+      return hour.toString()
     },
 
     minutes() {
@@ -122,7 +126,7 @@ export default {
       if (minutes < 10) {
         return `0${minutes}`
       }
-      return minutes
+      return minutes.toString()
     },
 
     reload() {
@@ -135,7 +139,7 @@ export default {
 
     fileName(h, m, diffDay) {
       const domain = 'https://ranchu-watch.s3-ap-northeast-1.amazonaws.com/capture'
-      const dateDir = `${this.year()}${this.month()}${this.day() + diffDay}`
+      const dateDir = `${this.year()}${this.month()}${parseInt(this.day()) + diffDay}`
       const filename = `${dateDir}-${h}${m}.jpg`
 
       return `${domain}/${dateDir}/${h}/${filename}`
