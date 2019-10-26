@@ -25,7 +25,7 @@ section.section
       .column
         figure.image
           img(:src="ranchuNow" v-if="isOnTime()")
-  .container(v-if="isOnTime()")
+  .container(v-if="isOnToday()")
     h1.title.is-6
       | きょうのらんちゅう
     .columns.is-variable.is-1.is-mobile.is-multiline
@@ -135,6 +135,10 @@ export default {
 
     isOnTime() {
       return (new Date().getHours() >= 8 && new Date().getHours() < 16)
+    },
+
+    isOnToday() {
+      return (800 <= parseInt(this.hour() + this.minutes()))
     },
 
     fileName(h, m, diffDay) {
