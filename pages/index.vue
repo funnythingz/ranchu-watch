@@ -50,24 +50,7 @@ export default {
 
   data() {
     return {
-      archives: [
-        {h: '08', m: '00'},
-        {h: '08', m: '30'},
-        {h: '09', m: '00'},
-        {h: '09', m: '30'},
-        {h: '10', m: '00'},
-        {h: '10', m: '30'},
-        {h: '11', m: '00'},
-        {h: '11', m: '30'},
-        {h: '12', m: '00'},
-        {h: '12', m: '30'},
-        {h: '13', m: '00'},
-        {h: '13', m: '30'},
-        {h: '14', m: '00'},
-        {h: '14', m: '30'},
-        {h: '15', m: '00'},
-        {h: '15', m: '30'}
-      ]
+      archives: []
     }
   },
 
@@ -85,6 +68,10 @@ export default {
       return `${domain}/${dateDir}/${hourDir}/${filename}` 
     }
 
+  },
+
+  created() {
+    this.createArchives()
   },
 
   methods: {
@@ -147,6 +134,20 @@ export default {
       const filename = `${dateDir}-${h}${m}.jpg`
 
       return `${domain}/${dateDir}/${h}/${filename}`
+    },
+
+    createArchives() {
+      for(var i = 8; i < 16; i++) {
+        var _i = i
+        if (_i < 10) {
+          _i = `0${i}`
+        }
+        var __i = _i.toString()
+        this.archives.push({h: __i, m: '00'})
+        this.archives.push({h: __i, m: '15'})
+        this.archives.push({h: __i, m: '30'})
+        this.archives.push({h: __i, m: '59'})
+      }
     }
 
   }
