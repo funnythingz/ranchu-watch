@@ -1,48 +1,57 @@
 <template lang="pug">
 section.section
-  .container
+  .container.wrapper
     .columns
-      .column
-        .columns.is-mobile.is-vcentered
-          .column
-            h1.title.is-4
-              | らんちゅうウォッチ
-          .column.has-text-right.is-3
-            button.button.is-small(@click="reload()")
-              | 更新
-    .columns.is-mobile.is-vcentered
-      .column
-        p
-          | ライブ時間: 8:00 ~ 16:00
-      .column.is-4.has-text-right
-        p.is-size-7
-          time
-            | {{date}}
-  .container
-    h1.title.is-6
-      | いまのらんちゅう
-    .columns
-      .column
-        figure.image
-          img(:src="ranchuNow" v-if="isOnTime()")
-  .container(v-if="isOnToday()")
-    h1.title.is-6
-      | きょうのらんちゅう
-    .columns.is-variable.is-1.is-mobile.is-multiline
-      .column.is-3.has-text-centerd(v-for="archive in archives" v-if="parseInt(archive.h + archive.m) <= parseInt(hour() + minutes())")
-        figure.thum
-          img(:src="fileName(archive.h, archive.m, 0)")
-        p.is-size-7.has-text-centered
-          | {{archive.h}}:{{archive.m}}
-  .container
-    h1.title.is-6
-      | きのうのらんちゅう
-    .columns.is-variable.is-1.is-mobile.is-multiline
-      .column.is-3.has-text-centerd(v-for="archive in archives")
-        figure.thum
-          img(:src="fileName(archive.h, archive.m, -1)")
-        p.is-size-7.has-text-centered
-          | {{archive.h}}:{{archive.m}}
+      .column.is-8
+        .container
+          .columns.is-mobile.is-vcentered
+            .column
+              h1.title.is-4
+                | らんちゅうウォッチ
+            .column.has-text-right.is-3
+              button.button.is-small(@click="reload()")
+                | 更新
+          .columns.is-mobile.is-vcentered
+            .column
+              p
+                | ライブ時間: 8:00 ~ 16:00
+            .column.is-4.has-text-right
+              p.is-size-7
+                time
+                  | {{date}}
+          section.spacing
+            h1.title.is-6
+              | いまのらんちゅう
+            .columns
+              .column
+                figure.image
+                  img(:src="ranchuNow" v-if="isOnTime()")
+          section.spacing(v-if="isOnToday()")
+            h1.title.is-6
+              | きょうのらんちゅう
+            .columns.is-variable.is-1.is-mobile.is-multiline
+              .column.is-3.has-text-centerd(v-for="archive in archives" v-if="parseInt(archive.h + archive.m) <= parseInt(hour() + minutes())")
+                figure.thum
+                  img(:src="fileName(archive.h, archive.m, 0)")
+                p.is-size-7.has-text-centered
+                  | {{archive.h}}:{{archive.m}}
+          section.spacing
+            h1.title.is-6
+              | きのうのらんちゅう
+            .columns.is-variable.is-1.is-mobile.is-multiline
+              .column.is-3.has-text-centerd(v-for="archive in archives")
+                figure.thum
+                  img(:src="fileName(archive.h, archive.m, -1)")
+                p.is-size-7.has-text-centered
+                  | {{archive.h}}:{{archive.m}}
+      .column.is-4
+        section
+          .container
+            .columns
+              .column
+                article.message
+                  .message-body
+                    | こんにちわんわん
 </template>
 
 <script>
@@ -154,9 +163,6 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.container
-  margin-top: 1rem
-  max-width: 700px
 .image
   min-height: 240px
   background-color: #333
@@ -172,6 +178,7 @@ export default {
 
   > img
     position: relative
+    vertical-align: middle
     z-index: 1
 
 .thum
@@ -181,4 +188,9 @@ export default {
 
 .title
   margin-bottom: 10px
+
+.spacing
+  margin-top: 1rem
+
+.wrapper
 </style>
