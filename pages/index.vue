@@ -63,9 +63,8 @@ export default {
     ranchuNow() {
       const domain = 'https://ranchu-watch.s3-ap-northeast-1.amazonaws.com/capture'
       const dateDir = `${this.year()}${this.month()}${this.day()}`
-      const hourDir = `${this.hour()}`
-      const filename = `${dateDir}-${hourDir}${this.minutes()}.jpg`
-      return `${domain}/${dateDir}/${hourDir}/${filename}` 
+      const filename = `${dateDir}-${this.hour()}${this.minutes()}.jpg`
+      return `${domain}/${dateDir}/${this.hour()}/${filename}`
     }
 
   },
