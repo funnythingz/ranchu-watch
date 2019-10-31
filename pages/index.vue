@@ -17,7 +17,7 @@ section.section
       .column.is-4.has-text-right
         p.is-size-7
           time
-            | {{date}}
+            | {{todayDate}}
   .container
     h1.title.is-6
       | いまのらんちゅう
@@ -29,9 +29,9 @@ section.section
     h1.title.is-6
       | きょうのらんちゅう
     .columns.is-variable.is-1.is-mobile.is-multiline
-      .column.is-3.has-text-centerd(v-for="archive in archives" v-if="parseInt(archive.h + archive.m) <= parseInt(hour() + minutes())")
+      .column.is-3.has-text-centerd(v-for="archive in archives" v-if="parseInt(archive.h + archive.m) <= parseInt(todayHour() + todayMinutes())")
         figure.thum
-          img(:src="fileName(archive.h, archive.m, 0)")
+          img(:src="todayFileName(archive.h, archive.m)")
         p.is-size-7.has-text-centered
           | {{archive.h}}:{{archive.m}}
   .container
@@ -40,7 +40,7 @@ section.section
     .columns.is-variable.is-1.is-mobile.is-multiline
       .column.is-3.has-text-centerd(v-for="archive in archives")
         figure.thum
-          img(:src="fileName(archive.h, archive.m, -1)")
+          img(:src="yesterdayFileName(archive.h, archive.m)")
         p.is-size-7.has-text-centered
           | {{archive.h}}:{{archive.m}}
 </template>
@@ -50,21 +50,23 @@ export default {
 
   data() {
     return {
-      archives: []
+      archives: [],
+      today: new Date(new Date() - (1000 * 60)),
+      yesterday: new Date(new Date() - (((1000 * 60) * 60) * 24))
     }
   },
 
   computed: {
 
-    date() {
-      return `${this.year()}/${this.month()}/${this.day()} ${this.hour()}:${this.minutes()}`
+    todayDate() {
+      return `${this.todayYear()}/${this.todayMonth()}/${this.todayDay()} ${this.todayHour()}:${this.todayMinutes()}`
     },
 
     ranchuNow() {
       const domain = 'https://ranchu-watch.s3-ap-northeast-1.amazonaws.com/capture'
       const dateDir = `${this.year()}${this.month()}${this.day()}`
-      const filename = `${dateDir}-${this.hour()}${this.minutes()}.jpg`
-      return `${domain}/${dateDir}/${this.hour()}/${filename}`
+      const filename = `${dateDir}-${this.todayHour()}${this.minutes()}.jpg`
+      return `${domain}/${dateDir}/${this.todayHour()}/${filename}`
     }
 
   },
@@ -75,40 +77,72 @@ export default {
 
   methods: {
 
-    now() {
-      return new Date(new Date() - (1000 * 60))
+    todayYear() {
+      return this.today.getFullYear()
     },
 
-    year() {
-      return this.now().getFullYear()
-    },
-
-    month() {
-      const month = this.now().getMonth() + 1
+    todayMonth() {
+      const month = this.today.getMonth() + 1
       if (month < 10) {
         return `0${month}`
       }
       return month.toString()
     },
 
-    day() {
-      const day = this.now().getDate()
+    todayDay() {
+      const day = this.today.getDate()
       if (day < 10) {
         return `0${day}`
       }
       return day.toString()
     },
 
-    hour() {
-      const hour = this.now().getHours()
+    todayHour() {
+      const hour = this.today.getHours()
       if (hour < 10) {
         return `0${hour}`
       }
       return hour.toString()
     },
 
-    minutes() {
-      const minutes = this.now().getMinutes()
+    todayMinutes() {
+      const minutes = this.today.getMinutes()
+      if (minutes < 10) {
+        return `0${minutes}`
+      }
+      return minutes.toString()
+    },
+
+    yesterdayYear() {
+      return this.yesterday.getFullYear()
+    },
+
+    yesterdayMonth() {
+      const month = this.yesterday.getMonth() + 1
+      if (month < 10) {
+        return `0${month}`
+      }
+      return month.toString()
+    },
+
+    yesterdayDay() {
+      const day = this.yesterday.getDate()
+      if (day < 10) {
+        return `0${day}`
+      }
+      return day.toString()
+    },
+
+    yesterdayHour() {
+      const hour = this.yesterday.getHours()
+      if (hour < 10) {
+        return `0${hour}`
+      }
+      return hour.toString()
+    },
+
+    yesterdayMinutes() {
+      const minutes = this.yesterday.getMinutes()
       if (minutes < 10) {
         return `0${minutes}`
       }
@@ -124,12 +158,20 @@ export default {
     },
 
     isOnToday() {
-      return (800 <= parseInt(this.hour() + this.minutes()))
+      return (800 <= parseInt(this.todayHour() + this.todayMinutes()))
     },
 
-    fileName(h, m, diffDay) {
+    todayFileName(h, m) {
       const domain = 'https://ranchu-watch.s3-ap-northeast-1.amazonaws.com/capture'
-      const dateDir = `${this.year()}${this.month()}${parseInt(this.day()) + diffDay}`
+      const dateDir = `${this.todayYear()}${this.todayMonth()}${parseInt(this.todayDay())}`
+      const filename = `${dateDir}-${h}${m}.jpg`
+
+      return `${domain}/${dateDir}/${h}/${filename}`
+    },
+
+    yesterdayFileName(h, m) {
+      const domain = 'https://ranchu-watch.s3-ap-northeast-1.amazonaws.com/capture'
+      const dateDir = `${this.yesterdayYear()}${this.yesterdayMonth()}${parseInt(this.yesterdayDay())}`
       const filename = `${dateDir}-${h}${m}.jpg`
 
       return `${domain}/${dateDir}/${h}/${filename}`
