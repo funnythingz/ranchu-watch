@@ -64,8 +64,8 @@ export default {
 
     ranchuNow() {
       const domain = 'https://ranchu-watch.s3-ap-northeast-1.amazonaws.com/capture'
-      const dateDir = `${this.year()}${this.month()}${this.day()}`
-      const filename = `${dateDir}-${this.todayHour()}${this.minutes()}.jpg`
+      const dateDir = `${this.todayYear()}${this.todayMonth()}${this.todayDay()}`
+      const filename = `${dateDir}-${this.todayHour()}${this.todayMinutes()}.jpg`
       return `${domain}/${dateDir}/${this.todayHour()}/${filename}`
     }
 
@@ -163,7 +163,7 @@ export default {
 
     todayFileName(h, m) {
       const domain = 'https://ranchu-watch.s3-ap-northeast-1.amazonaws.com/capture'
-      const dateDir = `${this.todayYear()}${this.todayMonth()}${parseInt(this.todayDay())}`
+      const dateDir = `${this.todayYear()}${this.todayMonth()}${this.todayDay()}`
       const filename = `${dateDir}-${h}${m}.jpg`
 
       return `${domain}/${dateDir}/${h}/${filename}`
