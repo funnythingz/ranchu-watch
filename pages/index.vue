@@ -171,7 +171,7 @@ export default {
 
     yesterdayFileName(h, m) {
       const domain = 'https://ranchu-watch.s3-ap-northeast-1.amazonaws.com/capture'
-      const dateDir = `${this.yesterdayYear()}${this.yesterdayMonth()}${parseInt(this.yesterdayDay())}`
+      const dateDir = `${this.yesterdayYear()}${this.yesterdayMonth()}${this.yesterdayDay()}`
       const filename = `${dateDir}-${h}${m}.jpg`
 
       return `${domain}/${dateDir}/${h}/${filename}`
